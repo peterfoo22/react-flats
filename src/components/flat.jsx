@@ -5,24 +5,43 @@ class Flat extends Component {
   constructor(props){
     super(props)
 
-  this.handleClick = this.handleClick.bind(this)
+  this.handleMouseOver = this.handleMouseOver.bind(this)
+  this.handleMouseOut = this.handleMouseOut.bind(this)
 
   }
 
-  handleClick = () => {
-    if (this.props.selectGif) {
-      this.props.selectGif(this.props.id);
-    }
+  handleMouseOver = (event) => {
+      if (event.target.className === "card"){
+        event.target.className = "card active"
+      }
+
+
+      this.props.selectaFlat(this.props.id);
   }
+
+  handleMouseOut = (event) =>{
+    if (event.target.className === "card active"){
+        event.target.className = "card"
+      }
+  }
+
+
 
   render(){
-    const imageSource = `https://raw.githubusercontent.com/lewagon/flats-boilerplate/master/images/flat${this.props.id}.jpg`
+    const imageSource = `https://raw.githubusercontent.com/lewagon/flats-boilerplate/master/images/flat${this.props.id + 1}.jpg`
 
     return (
-      <div className = "card">
-        <img src = {imageSource} />
+        <React.Fragment>
+          <div className="card" style={{
+                backgroundImage: "url(" + `${imageSource}` + ")",
+              }} onMouseOver = {this.handleMouseOver} onMouseOut = {this.handleMouseOut} >
+              <div className="card-category">{this.props.price} EUR</div>
+              <div className="card-description">
+                <h2>{this.props.name}</h2>
+              </div>
 
-      </div>
+        </div>
+        </React.Fragment>
     );
   }
 
